@@ -16,21 +16,22 @@ resource "aws_s3_bucket" "www_bucket" {
   acl    = "public-read"
 }
 
-data "aws_iam_policy_document" "www_bucket_policy" {
-  statement {
-    sid = "PublicReadGetObject"
-
-    actions = [
-      "s3:GetObject"
-    ]
-
-    resources = [
-      "arn:aws:s3:::www.thecloudonmymind.com/*",
-    ]
-  }
-}
-
 resource "aws_s3_bucket_policy" "www_bucket_policy" {
-  bucket = aws_s3_bucket.www_bucket.id
-  policy = data.aws_iam_policy_document.www_bucket_policy.json
+  bucket     = aws_s3_bucket.www_bucket.id
+  depends_on = [aws_s3_bucket.www_bucket]
+  policy     = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Id": "PublicReadAllow",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::www.thecloudonmymind.com/*"
+    }
+  ]
+}
+POLICY
 }
