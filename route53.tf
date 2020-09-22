@@ -13,3 +13,14 @@ resource "aws_route53_record" "blog_www_zone" {
     evaluate_target_health = false
   }
 }
+
+resource "aws_route53_record" "blog_zone_record" {
+  zone_id = aws_route53_zone.blog_zone.zone_id
+  name    = "thecloudonmymind.com"
+  type    = "A"
+  alias {
+    name                   = aws_s3_bucket.www_bucket.website_endpoint
+    zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
