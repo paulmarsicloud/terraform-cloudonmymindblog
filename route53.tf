@@ -8,7 +8,7 @@ resource "aws_route53_record" "blog_www_zone" {
   name    = "www.thecloudonmymind.com"
   type    = "A"
   alias {
-    name                   = aws_s3_bucket.www_bucket.bucket_regional_domain_name
+    name                   = aws_s3_bucket.www_bucket.website_endpoint
     zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
     evaluate_target_health = false
   }
