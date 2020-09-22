@@ -14,6 +14,9 @@ provider "aws" {
 resource "aws_s3_bucket" "www_bucket" {
   bucket = "www.thecloudonmymind.com"
   acl    = "public-read"
+  website {
+    index_document = "index.html"
+  }
 }
 
 resource "aws_s3_bucket_policy" "www_bucket_policy" {
