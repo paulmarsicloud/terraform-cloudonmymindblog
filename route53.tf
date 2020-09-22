@@ -1,15 +1,15 @@
 resource "aws_route53_zone" "blog_zone" {
-  name = "thecloudonmymind.com"
+  name    = "thecloudonmymind.com"
+  comment = "Blog Route 53 zone"
 }
 
-resource "aws_route53_zone" "blog_www_zone" {
-  name = "www.thecloudonmymind.com"
-}
-
-resource "aws_route53_record" "blog_www_zone_cname" {
+resource "aws_route53_record" "blog_www_zone" {
   zone_id = aws_route53_zone.blog_zone.zone_id
   name    = "www.thecloudonmymind.com"
   type    = "A"
-  ttl     = "30"
-  records = [aws_s3_bucket.www_bucket.id]
+  alias {
+    name                   = aws_s3_bucket.www_bucket.bucket_regional_domain_name
+    zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
+    evaluate_target_health = false
+  }
 }
