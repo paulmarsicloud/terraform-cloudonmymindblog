@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "www_bucket" {
-  bucket = "www.thecloudonmymind.com"
+  bucket = "thecloudonmymind.com"
   acl    = "public-read"
   website {
     index_document = "index.html"
@@ -32,7 +32,7 @@ resource "aws_s3_bucket_policy" "www_bucket_policy" {
       "Effect": "Allow",
       "Principal": "*",
       "Action": "s3:GetObject",
-      "Resource": "arn:aws:s3:::www.thecloudonmymind.com/*"
+      "Resource": "arn:aws:s3:::thecloudonmymind.com/*"
     }
   ]
 }
