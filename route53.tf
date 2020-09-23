@@ -12,6 +12,7 @@ resource "aws_route53_record" "blog_www_zone" {
     zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
     evaluate_target_health = false
   }
+  depends_on = [aws_s3_bucket.www_bucket]
 }
 
 resource "aws_route53_record" "blog_zone_record" {
@@ -23,4 +24,5 @@ resource "aws_route53_record" "blog_zone_record" {
     zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
     evaluate_target_health = false
   }
+  depends_on = [aws_s3_bucket.www_bucket]
 }
