@@ -8,7 +8,7 @@ resource "aws_route53_record" "blog_www_zone" {
   name    = "www.thecloudonmymind.com"
   type    = "A"
   alias {
-    name                   = aws_s3_bucket.www_bucket.website_endpoint
+    name                   = aws_s3_bucket.www_bucket.website_domain
     zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
     evaluate_target_health = false
   }
@@ -20,7 +20,7 @@ resource "aws_route53_record" "blog_zone_record" {
   name    = "thecloudonmymind.com"
   type    = "A"
   alias {
-    name                   = aws_s3_bucket.www_bucket.website_endpoint
+    name                   = aws_s3_bucket.www_bucket.website_domain
     zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
     evaluate_target_health = false
   }
