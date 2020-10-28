@@ -43,7 +43,7 @@ resource "aws_s3_bucket" "redirect_bucket" {
   bucket = "thecloudonmymind.com"
   acl    = "public-read"
   website {
-    redirect_all_requests_to = "www.thecloudonmymind.com"
+    redirect_all_requests_to = "https://www.thecloudonmymind.com"
   }
 }
 
