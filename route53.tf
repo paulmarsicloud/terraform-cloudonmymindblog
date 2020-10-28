@@ -27,10 +27,19 @@ resource "aws_route53_record" "blog_zone_record" {
   depends_on = [aws_s3_bucket.www_bucket]
 }
 
-resource "aws_route53_record" "www-certificate-validation" {
-  name    = aws_acm_certificate.www-certificate.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.www-certificate.domain_validation_options.0.resource_record_type
-  zone_id = aws_route53_zone.blog_zone.zone_id
-  records = [aws_acm_certificate.www-certificate.domain_validation_options.0.resource_record_value]
-  ttl     = "60"
+resource "aws_route53_record" "www-cert-validation" {
+  for_each = {
+    for dvo in aws_acm_certificate.www-certificate.domain_validation_options : dvo.domain_name => {
+      name   = dvo.resource_record_name
+      record = dvo.resource_record_value
+      type   = dvo.resource_record_type
+    }
+  }
+
+  allow_overwrite = true
+  name            = each.value.name
+  records         = [each.value.record]
+  ttl             = 60
+  type            = each.value.type
+  zone_id         = aws_route53_zone.blog_zone.zone_id
 }
