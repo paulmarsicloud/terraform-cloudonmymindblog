@@ -8,8 +8,8 @@ resource "aws_route53_record" "blog_www_zone" {
   name    = "www.thecloudonmymind.com"
   type    = "A"
   alias {
-    name                   = aws_s3_bucket.www_bucket.website_domain
-    zone_id                = aws_s3_bucket.www_bucket.hosted_zone_id
+    name                   = aws_cloudfront_distribution.www_distribution.domain_name
+    zone_id                = aws_cloudfront_distribution.www_distribution.hosted_zone_id
     evaluate_target_health = false
   }
   depends_on = [aws_s3_bucket.www_bucket]
